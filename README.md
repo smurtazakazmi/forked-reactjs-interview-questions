@@ -312,7 +312,7 @@
 |296| [How do you set default value for uncontrolled component?](#how-do-you-set-default-value-for-uncontrolled-component)|
 |297| [What is your favorite React stack?](#what-is-your-favorite-react-stack)|
 |298| [What is the difference between Real DOM and Virtual DOM?](#what-is-the-difference-between-real-dom-and-virtual-dom)|
-|299| [How to add a bootstrap for a react application?](#how-to-add-a-bootstrap-for-a-react-application)|
+|299| [How to add Bootstrap to a react application?](#how-to-add-bootstrap-to-react-application)|
 |300| [Can you list down top websites or applications using react as front end framework?](#can-you-list-down-top-websites-or-applications-using-react-as-front-end-framework)|
 |301| [Is it recommended to use CSS In JS technique in React?](#is-it-recommended-to-use-css-in-js-technique-in-react)|
 |302| [Do I need to rewrite all my class components with hooks?](#do-i-need-to-rewrite-all-my-class-components-with-hooks)|
@@ -334,6 +334,7 @@
 |318| [Should I learn ES6 before learning ReactJS?](#should-i-learn-es6-before-learning-reactjs)|
 |319| [What is Concurrent Rendering?](#what-is-concurrent-rendering)|
 |320| [What is the difference between async mode and concurrent mode?](#what-is-the-difference-between-async-mode-and-concurrent-mode)|
+|321| [Can I use javascript urls in react16.9?](#can-i-use-javascript-urls-in-react16.9)|
 
 ## Core React
 
@@ -347,7 +348,7 @@
 
     * It uses **VirtualDOM** instead RealDOM considering that RealDOM manipulations are expensive.
     * Supports **server-side rendering**.
-    * Follows *Unidirectional** data flow or data binding.
+    * Follows **Unidirectional** data flow or data binding.
     * Uses **reusable/composable** UI components to develop the view.
 
 3. ### What is JSX?
@@ -442,6 +443,7 @@
 6. ### When to use a Class Component over a Function Component?
 
     If the component needs *state or lifecycle methods* then use class component otherwise use function component.
+    *However, from React 16.8 with the addition of Hooks, you could use state , lifecycle  methods and other features that were only available in class component right in your function component.*
 
 7. ### What are Pure Components?
 
@@ -3029,6 +3031,16 @@
        }
      }
      ```
+     
+     Recommend always using the “object shorthand” form for the `mapDispatchToProps`
+        
+     Redux wrap it in another function that looks like (…args) => dispatch(onTodoClick(…args)), and pass that wrapper function as a prop to your component.
+      
+      ```javascript
+       const mapDispatchToProps = ({
+         onTodoClick
+       })
+      ```
 
 157. ### Can I dispatch an action in reducer?
 
@@ -3036,7 +3048,7 @@
 
 158. ### How to access Redux store outside a component?
 
-     Yes. You just need to export the store from the module where it created with `createStore()`. Also, it shouldn't pollute the global window object.
+     You just need to export the store from the module where it created with `createStore()`. Also, it shouldn't pollute the global window object.
 
      ```javascript
      store = createStore(myReducer)
@@ -5070,7 +5082,7 @@
      | It causes too much of memory wastage | 	There is no memory wastage|
      | Creates a new DOM if element updates | It updates the JSX if element update|
 
-299. ### How to add a bootstrap for a react application?
+299. ### How to add Bootstrap to a react application?
      Bootstrap can be added to your React app in a three possible ways
      1. Using the Bootstrap CDN:
         This is the easiest way to add bootstrap. Add both bootstrap CSS and JS resources in a head tag.
@@ -5214,7 +5226,7 @@
      2. Spread operator: Helps in passing props down into a component
      ```javascript
      // in es 5
-     <SomeComponent myData={this.props.someData} dispatch={this.props.dispatch} />
+     <SomeComponent someData={this.props.someData} dispatch={this.props.dispatch} />
 
      // in es6
      <SomeComponent {...this.props} />
@@ -5241,3 +5253,13 @@
      ```
 320. ### What is the difference between async mode and concurrent mode?
      Both refers the same thing. Previously concurrent Mode being referred to as "Async Mode" by React team. The name has been changed to highlight React’s ability to perform work on different priority levels. So it avoids the confusion from other approaches to Async Rendering.
+321. ### Can I use javascript urls in react16.9?
+     Yes, you can use javascript: URLs but it will log a warning in the console. Because URLs starting with javascript: are dangerous by including unsanitized output in a tag like <a href> and create a security hole.
+     ```javascript
+     const companyProfile = {
+       website: "javascript: alert('Your website is hacked')",
+     };
+     // It will log a warning
+     <a href={companyProfile.website}>More details</a>
+     ```
+     Remember that the future versions will throw an error for javascript URLs.
